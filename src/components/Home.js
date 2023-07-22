@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Emoji from './Emoji';
 const Home = () => {
   // react state to hold the data
   const [data, setData] = useState([]);
@@ -6,6 +7,7 @@ const Home = () => {
   const [inputValue, setInputValue] = useState();
   const [index, setIdex] = useState(0);
   const [renderData, setRenderData] = useState([]);
+
   //useEffect to fetch the data
   useEffect(() => {
     const fetchData = async () => {
@@ -52,13 +54,6 @@ const Home = () => {
     }
   };
 
-  //function to retur the actual emoji code to render as a html code
-  const decodedEmoji = (emojiCode) => {
-    const textarea = document.createElement('textarea');
-    textarea.innerHTML = emojiCode;
-    return textarea.value;
-  };
-
   return (
     <div className='main-container'>
       <div className='search-bar'>
@@ -70,16 +65,14 @@ const Home = () => {
           onChange={(e) => setInputValue(e.target.value)}
         />
       </div>
-      <div className='emoji-container'>
-        {renderData.map((emoji, index) => (
-          <h
-            className='emoji-item'
-            key={index}
-            dangerouslySetInnerHTML={{
-              __html: decodedEmoji(emoji.htmlCode[0]),
-            }}
-          />
-        ))}
+      <div className='container'>
+        <div className='row align-item-center'>
+          {renderData.map((emoji, index) => (
+            <div className='col-12 col-md col-1 mt-2' key={index}>
+              <Emoji emoji={emoji} />
+            </div>
+          ))}
+        </div>
       </div>
       <div className='buttons'>
         <button type='button' className='btn btn-primary' onClick={handlePrev}>
